@@ -63,6 +63,11 @@
                 window.focus();
             };
         }
+
+        // Trigger the notification automatically if permission is already granted
+        if (Notification.permission === 'granted') {
+            showNotification();
+        }
     </script>
 </body>
 </html>
