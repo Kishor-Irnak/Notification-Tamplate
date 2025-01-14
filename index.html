@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Notification Demo</h1>
+    <p>Click the button below to see a notification:</p>
+    <button id="notifyBtn">Show Notification</button>
+
+    <script>
+        document.getElementById('notifyBtn').addEventListener('click', () => {
+            // Check if the browser supports notifications
+            if (!('Notification' in window)) {
+                alert('This browser does not support notifications.');
+                return;
+            }
+
+            // Ask for permission if not already granted
+            if (Notification.permission === 'default') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        showNotification();
+                    } else {
+                        alert('Notifications are blocked.');
+                    }
+                });
+            } else if (Notification.permission === 'granted') {
+                showNotification();
+            } else {
+                alert('Notifications are blocked.');
+            }
+        });
+
+        function showNotification() {
+            const notification = new Notification('Hello!', {
+                body: 'This is a sample notification.',
+                icon: 'https://via.placeholder.com/80' // Replace with your own icon URL
+            });
+
+            notification.onclick = () => {
+                window.focus();
+            };
+        }
+    </script>
+</body>
+</html>
